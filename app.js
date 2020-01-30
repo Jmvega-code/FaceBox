@@ -4,28 +4,28 @@ const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.set('view engine', 'ejs');
-let campgrounds = [
-  {name: 'Salmon Creek', image: 'https://bit.ly/2uMJXP2'},
-  {name: 'Granite Hill', image: 'https://bit.ly/2S0Gp3V'},
-  {name: `Mountain Goat's rest`, image: 'https://bit.ly/2U8XcEl'}
+let boxes = [
+  {name: 'Crossfit Montequinto', image: 'https://bit.ly/2S4JNdU'},
+  {name: 'Giralda Crossfit', image: 'https://bit.ly/36HPjIN'},
+  {name: 'La Colmena Crossfit', image: 'https://bit.ly/2RFcRcX'}
 ];
 
 app.get('/', (req, res) => {
   res.render('landing');
 })
 
-app.get('/campgrounds', (req,res) => {
-  res.render('campgrounds', {campgrounds})
+app.get('/boxes', (req,res) => {
+  res.render('boxes', {boxes})
 });
 
-app.post('/campgrounds', (req,res) => {
+app.post('/boxes', (req,res) => {
   let name = req.body.name;
   let image = req.body.image;
-  let newcampground = {name: name, image: image};
-  campgrounds.push(newcampground);
-  res.redirect('/campgrounds');
+  let newbox = {name: name, image: image};
+  boxes.push(newbox);
+  res.redirect('/boxes');
 })
-app.get('/campgrounds/new', (req,res) => {
+app.get('/boxes/new', (req,res) => {
   res.render('new.ejs')
 })
 

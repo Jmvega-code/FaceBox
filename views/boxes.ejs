@@ -1,0 +1,19 @@
+<%- include('partials/header')%>
+  <div class="container">
+    <header class="jumbotron">
+      <h1>Welcome to BoxFinder</h1>
+      <p>Check the best of the best places to workout</p>
+    </header>
+
+    <a href="/boxes/new">Add New Box</a>
+
+
+    <% boxes.forEach( box => { %>
+      <div>
+        <h3><%=box.name%><h3/>
+        <img src=" <%= box.image %> ">
+      </div>
+    <% })%>
+  </div>  
+    
+<%- include('partials/footer')%>
