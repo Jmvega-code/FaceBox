@@ -1,0 +1,19 @@
+{
+  "name": "yelpcamp",
+  "version": "1.0.0",
+  "description": "Mi yelp clone",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Jmvega-code/yelpcamp.git"
+  },
+  "author": "Juanma Vega",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jmvega-code/yelpcamp/issues"
+  },
+  "homepage": "https://github.com/Jmvega-code/yelpcamp#readme"
+}
