@@ -1,19 +1,30 @@
 <%- include('partials/header')%>
   <div class="container">
     <header class="jumbotron">
-      <h1>Welcome to BoxFinder</h1>
-      <p>Check the best of the best places to workout</p>
+      <div class="container">
+        <h1>Welcome to BoxFinder</h1>
+        <p>Check the best places to workout</p>
+        <p>
+          <a  class="btn btn-primary btn-lg" href="/boxes/new">Add New Box</a>
+        </p>
+      </div>
     </header>
 
-    <a href="/boxes/new">Add New Box</a>
+    <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 
+        <% boxes.forEach( box => { %>
+          <div class="col-md-3 col-sm-6">
+            <div class="thumbnail">
+              <img src=" <%= box.image %> ">
+              <div class="caption">
+                <h4><%=box.name%><h4/>
+              </div>
+            </div>
+          </div>
+        <% })%>
 
-    <% boxes.forEach( box => { %>
-      <div>
-        <h3><%=box.name%><h3/>
-        <img src=" <%= box.image %> ">
-      </div>
-    <% })%>
+    </div>
+
   </div>  
     
 <%- include('partials/footer')%>

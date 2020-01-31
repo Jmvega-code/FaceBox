@@ -7,6 +7,12 @@ app.set('view engine', 'ejs');
 let boxes = [
   {name: 'Crossfit Montequinto', image: 'https://bit.ly/2S4JNdU'},
   {name: 'Giralda Crossfit', image: 'https://bit.ly/36HPjIN'},
+  {name: 'La Colmena Crossfit', image: 'https://bit.ly/2RFcRcX'},
+  {name: 'Crossfit Montequinto', image: 'https://bit.ly/2S4JNdU'},
+  {name: 'Giralda Crossfit', image: 'https://bit.ly/36HPjIN'},
+  {name: 'La Colmena Crossfit', image: 'https://bit.ly/2RFcRcX'},
+  {name: 'Crossfit Montequinto', image: 'https://bit.ly/2S4JNdU'},
+  {name: 'Giralda Crossfit', image: 'https://bit.ly/36HPjIN'},
   {name: 'La Colmena Crossfit', image: 'https://bit.ly/2RFcRcX'}
 ];
 
