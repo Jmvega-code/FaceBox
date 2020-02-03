@@ -7,7 +7,8 @@ mongoose.connect('mongodb://localhost/boxes_app',{useNewUrlParser: true, useUnif
 
 const boxSchema = new mongoose.Schema({
   name: String,
-  image: String
+  image: String,
+  address: String
 }),
 Box = mongoose.model('Box', boxSchema)
 
@@ -15,27 +16,11 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.set('view engine', 'ejs');
 
 
-
-
-
-
-
-/**let boxes = [
-  {name: 'Crossfit Montequinto', image: 'https://bit.ly/2S4JNdU'},
-  {name: 'Giralda Crossfit', image: 'https://bit.ly/36HPjIN'},
-  {name: 'La Colmena Crossfit', image: 'https://bit.ly/2RFcRcX'},
-  {name: 'Crossfit Montequinto', image: 'https://bit.ly/2S4JNdU'},
-  {name: 'Giralda Crossfit', image: 'https://bit.ly/36HPjIN'},
-  {name: 'La Colmena Crossfit', image: 'https://bit.ly/2RFcRcX'},
-  {name: 'Crossfit Montequinto', image: 'https://bit.ly/2S4JNdU'},
-  {name: 'Giralda Crossfit', image: 'https://bit.ly/36HPjIN'},
-  {name: 'La Colmena Crossfit', image: 'https://bit.ly/2RFcRcX'}
-];
-*/
 app.get('/', (req, res) => {
   res.render('landing');
 })
 
+// INDEX show all boxes
 app.get('/boxes', (req,res) => {
   // Get all boxes from db
   Box.find({}, (err, allBoxes) => {
@@ -47,6 +32,7 @@ app.get('/boxes', (req,res) => {
   })
 });
 
+// CREATE add new Box to db
 app.post('/boxes', (req,res) => {
   let name = req.body.name;
   let image = req.body.image;
@@ -55,15 +41,16 @@ app.post('/boxes', (req,res) => {
     if(err){
       console.log(err);
     } else {
-      console.log(newbox);
+      res.redirect('/boxes');
     }
-  })
-  res.redirect('/boxes');
-})
+  });
+});
+
+// NEW - Show form to create new Boxes
 app.get('/boxes/new', (req,res) => {
   res.render('new.ejs')
 })
 
 app.listen(3000, () => {
-  console.log('Serving the YelpCamp on port 3000!')
-})
+  console.log('Serving the BoxFinder on port 3000!')
+});
