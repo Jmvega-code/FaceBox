@@ -27,7 +27,7 @@ app.get('/boxes', (req,res) => {
     if(err){
       console.log(err)
     } else {
-      res.render('boxes', {allBoxes})
+      res.render('index', {allBoxes})
     }
   })
 });
@@ -36,7 +36,8 @@ app.get('/boxes', (req,res) => {
 app.post('/boxes', (req,res) => {
   let name = req.body.name;
   let image = req.body.image;
-  let newbox = {name: name, image: image};
+  let address= req.body.address;
+  let newbox = {name, image, address};
   Box.create(newbox, (err, newbox) => {
     if(err){
       console.log(err);
@@ -48,8 +49,21 @@ app.post('/boxes', (req,res) => {
 
 // NEW - Show form to create new Boxes
 app.get('/boxes/new', (req,res) => {
-  res.render('new.ejs')
+  res.render('new')
 })
+
+// SHOW shows more info about a Box
+app.get('/boxes/:id', (req,res) => {
+  let id = req.params.id;
+  Box.findById(id, (err, foundBox) => {
+    if(err){
+      console.log(err);
+    } else {
+      res.render('show', {foundBox})
+
+    }
+  })
+});
 
 app.listen(3000, () => {
   console.log('Serving the BoxFinder on port 3000!')
