@@ -9,10 +9,10 @@ const boxSchema = new mongoose.Schema({
   name: String,
   image: String,
   address: String
-}),
-Box = mongoose.model('Box', boxSchema)
+});
+const Box = mongoose.model('Box', boxSchema);
 
-app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
 
 
@@ -32,6 +32,11 @@ app.get('/boxes', (req,res) => {
   })
 });
 
+// NEW - Show form to create new Boxes
+app.get('/boxes/new', (req,res) => {
+  res.render('new')
+});
+
 // CREATE add new Box to db
 app.post('/boxes', (req,res) => {
   let name = req.body.name;
@@ -46,11 +51,6 @@ app.post('/boxes', (req,res) => {
     }
   });
 });
-
-// NEW - Show form to create new Boxes
-app.get('/boxes/new', (req,res) => {
-  res.render('new')
-})
 
 // SHOW shows more info about a Box
 app.get('/boxes/:id', (req,res) => {
