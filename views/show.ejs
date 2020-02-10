@@ -5,6 +5,9 @@
     <p><img src='<%=foundBox.image%>'> </p>
     <h3> <p>Address: <%=foundBox.address%></p></h3>
     <a href="/boxes" class="btn btn-primary">Go Back</a>
+    <p>
+      <a href="/boxes/<%= box._id %>/edit" class="btn btn-primary">Edit</a>
+    </p>
   </div>
 </div>
 <%- include('partials/footer')%>
