@@ -1,11 +1,11 @@
 const bodyParser        = require('body-parser'),
       express           = require('express'),
       methodOverride    = require('method-override'),
-      expressSanitizer  = require('express-sanitizer,')
+      expressSanitizer  = require('express-sanitizer'),
       app               = express(),
       mongoose          = require('mongoose')
 
-mongoose.connect('mongodb://localhost/boxes_app',{useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost/boxes_app',{useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false, useCreateIndex: true});
 
 const boxSchema = new mongoose.Schema({
   name: String,
@@ -14,9 +14,11 @@ const boxSchema = new mongoose.Schema({
 });
 const Box = mongoose.model('Box', boxSchema);
 
-app.use(bodyParser.urlencoded({extended:true}));
 app.set('view engine', 'ejs');
-
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(expressSanitizer());
+app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
   res.render('landing');
@@ -57,14 +59,15 @@ app.get('/boxes/:id', (req,res) => {
     if(err){
       console.log(err);
     } else {
-      res.render('show', {foundBox})
+      res.render('show', {box: foundBox})
     }
   })
 });
 
 // EDIT shows edit form and update a post
 app.get('/boxes/:id/edit', (req,res) => {
-  Box.findById(req.params.id, (err, foundBox) => {
+  let id = req.params.id;
+  Box.findById(id, (err, foundBox) => {
     if(err){
       res.redirect('/boxes');
     } else {
@@ -79,7 +82,7 @@ app.put('/boxes/:id', (req, res) => {
     if(err){
       res.redirect('/boxes');
     } else {
-      res.redirect('/post/' + req.params.id)
+      res.redirect('/boxes/' + req.params.id)
     }
   });
 });
@@ -88,9 +91,9 @@ app.put('/boxes/:id', (req, res) => {
 app.delete('/boxes/:id', (req, res) => {
   Box.findByIdAndRemove(req.params.id, (err,) => {
     if(err){
-      res.redirect('/boxes');
+      console.log(err);
     } else {
-      res.redirect('/boxes')
+      res.redirect('/boxes');
     }
   });
 });
