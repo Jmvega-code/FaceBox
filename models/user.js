@@ -2,7 +2,7 @@ const mongoose  = require('mongoose');
 
 
 // MONGOOSE ESCHEMA CONFIG
-const userSchema = new mongoose.Schema({
+let userSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String

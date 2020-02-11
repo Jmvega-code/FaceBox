@@ -1,15 +1,43 @@
 <%- include('../partials/header')%>
 <div class="container">
-  <h1><p><%=box.name%></p></h1>
+  <div class="row">
+    <div class="col-md-3">
+      <p class="lead">BoxFinder</p>
+      <div class="list-group">
+        <li class="list-group-item active">Info 1</li>
+        <li class="list-group-item">Info 2</li>
+        <li class="list-group-item">Info 3</li>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="thumbnail">
+        <img class="img-responsive" src='<%=box.image%>'>
+        <div class="caption">
+          <h4 class="pull-right">$15.00/drop in</h4>
+          <h4><a href=""><%=box.name%></a></h4>
+          <p><%=box.address%></p>
+        </div>
+      </div>
+      <div class="well">
+        <div class="text-right">
+          <a class="btn btn-success" href="/boxes/<%= box._id %>/comments/new">Add a comment</a>
+        </div>
+        <hr>
+        <% box.comments.forEach((comment) => { %>
+          <div class="row">
+            <div class="col-md-12">
+              <strong><%=comment.author%></strong>
+              <span class="pull-right">10 days ago</span>
+              <p>
+                <%=comment.text%>
+              </p>
+            </div>
+          </div>
+        <%})%>    
+      </div>
+    </div>
+  </div>
   <div class="container">
-    <p><img src='<%=box.image%>'> </p>
-    <h3> <p><%=box.address%></p></h3>
-    <% box.comments.forEach((comment) => { %>
-      <p>
-        <strong><%=comment.author%></strong> - <%=comment.text%>, <%=comment.created.toDateString()%>
-      </p>
-      <%})%>
-      <a href="/boxes/<%= box._id %>/comments/new" class="btn btn-primary">Add a comment</a>
     <a href="/boxes" class="btn btn-primary">Go Back</a>
     <p>
       <a href="/boxes/<%= box._id %>/edit" class="btn btn-primary">Edit</a>

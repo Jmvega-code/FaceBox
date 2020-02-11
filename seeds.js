@@ -12,7 +12,7 @@ let data = [
   {
     name:'Crossfit Mayhem',
     image:'https://morningchalkup.com/wp-content/uploads/2019/05/mayhemmain-1440xauto@2x.jpg',
-    address:'Reykjavik, Iceland',
+    address:'601 Rich Froning Way Cookeville, TN, 38501, United States',
   },
   {
     name:'Crossfit Texas',

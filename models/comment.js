@@ -2,7 +2,7 @@ const mongoose  = require('mongoose');
 
 
 // MONGOOSE ESCHEMA CONFIG
-const commentSchema = new mongoose.Schema({
+let commentSchema = new mongoose.Schema({
   text: String,
   author: String,
   created: {type: Date, default: Date.now}

@@ -16,6 +16,7 @@ mongoose.connect('mongodb://localhost/boxes_app',{useNewUrlParser: true, useUnif
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(express.static(__dirname + '/public'));
 app.use(expressSanitizer());
 app.use(methodOverride('_method'));    
 seedDB();
