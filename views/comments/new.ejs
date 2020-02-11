@@ -1,0 +1,35 @@
+<%- include('../partials/header')%>
+<div class="container">
+  <h1> <%= box.name %> </h1>
+  <div class="container">
+    <div class="image">
+      <p><img src='<%=box.image%>'> </p>
+    </div>
+    <h3> <p><%=box.address%></p></h3>
+    <% box.comments.forEach((comment) => { %>
+      <p>
+        <strong><%=comment.author%></strong> - <%=comment.text%>, <%=comment.created.toDateString()%>
+      </p>
+    <%})%>
+      <form action="/boxes/<%=box._id%>/comments" method="POST">
+        <div class="form-group">
+          <input class="form-control" type="text" name="comment[author]" placeholder="Author">
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" name="comment[text]" placeholder="Write a comment"></textarea>
+        </div>
+        <div class="form-group">
+          <button class="btn-primary btn-lg btn-default">Submit</button>
+        </div>
+      </form>
+      <a href="/boxes">Go Back</a>
+    </div>
+    <p>
+      <a href="/boxes/<%= box._id %>/edit" class="btn btn-primary">Edit</a>
+    </p>
+  </div>
+  <form action="/boxes/<%=box._id%>?_method=DELETE" method="POST">
+  <button class="btn btn-primary"></i>Delete Box</button> 
+  </form>
+</div>
+<%- include('../partials/footer')%>

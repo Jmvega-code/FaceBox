@@ -1,4 +1,4 @@
-<%- include('partials/header')%>
+<%- include('../partials/header')%>
 <div class="container">
   <h1><p><%=box.name%></p></h1>
   <div class="container">
@@ -8,7 +8,8 @@
       <p>
         <strong><%=comment.author%></strong> - <%=comment.text%>, <%=comment.created.toDateString()%>
       </p>
-    <%})%>
+      <%})%>
+      <a href="/boxes/<%= box._id %>/comments/new" class="btn btn-primary">Add a comment</a>
     <a href="/boxes" class="btn btn-primary">Go Back</a>
     <p>
       <a href="/boxes/<%= box._id %>/edit" class="btn btn-primary">Edit</a>
@@ -18,4 +19,4 @@
   <button class="btn btn-primary"></i>Delete</button> 
   </form>
 </div>
-<%- include('partials/footer')%>
+<%- include('../partials/footer')%>

@@ -6,7 +6,7 @@ const Comment = require('./models/comment');
 let data = [
   {
     name:'Crossfit Reykjavik',
-    image:'https://unboxguide.com/wp-content/uploads/2016/05/Reykjavik0-1.jpg',
+    image:'https://i0.wp.com/grapevine.is/wp-content/uploads/Crossfit_timotheeLambrecq5-e1521729052777.jpg?fit=690%2C460&quality=99&ssl=1',
     address:'Reykjavik, Iceland',
   },
   {

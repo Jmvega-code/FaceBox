@@ -33,14 +33,14 @@ app.get('/boxes', (req,res) => {
     if(err){
       console.log(err)
     } else {
-      res.render('index', {allBoxes})
+      res.render('boxes/index', {allBoxes})
     }
   })
 });
 
 // NEW - Show form to create new Boxes
 app.get('/boxes/new', (req,res) => {
-  res.render('new')
+  res.render('boxes/new')
 });
 
 // CREATE add new Box to db
@@ -64,7 +64,7 @@ app.get('/boxes/:id', (req,res) => {
     } else {
       console.log(foundBox);
       //render the show template withthat box
-      res.render('show', {box: foundBox});
+      res.render('boxes/show', {box: foundBox});
     }
   })
 });
@@ -76,7 +76,7 @@ app.get('/boxes/:id/edit', (req,res) => {
     if(err){
       res.redirect('/boxes');
     } else {
-      res.render('edit', {box: foundBox});
+      res.render('boxes/edit', {box: foundBox});
     }
   });
 });
@@ -102,6 +102,48 @@ app.delete('/boxes/:id', (req, res) => {
     }
   });
 });
+
+
+
+//====================
+// COMMENTS ROUTES
+//====================
+
+app.get('/boxes/:id/comments/new', (req,res) => {
+  // find box with the ID
+  Box.findById(req.params.id).populate('comments').exec((err, foundBox) => {
+    if(err){
+      console.log(err);
+    } else {
+      console.log(foundBox);
+      //render the show template with that box
+      res.render('comments/new', {box: foundBox});
+    }
+  })
+});
+
+app.post('/boxes/:id/comments', (req, res) => {
+  //lookup box using id
+  Box.findById(req.params.id, (err, box) => {
+    if(err){
+      console.log(err);
+      res.redirect('/boxes');
+    } else {
+      Comment.create(req.body.comment, (err, comment) => {
+        if(err){
+          console.log(err);
+        } else {
+          box.comments.push(comment);
+          box.save();
+          res.redirect('/boxes/' + box._id);
+        }
+      });
+    }
+  });
+});
+
+
+
 
 app.listen(3000, () => {
   console.log('Serving the BoxFinder on port 3000!')
