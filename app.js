@@ -3,23 +3,25 @@ const bodyParser        = require('body-parser'),
       methodOverride    = require('method-override'),
       expressSanitizer  = require('express-sanitizer'),
       app               = express(),
-      mongoose          = require('mongoose')
+      mongoose          = require('mongoose'),
+      Box               = require('./models/box'),
+      Comment           = require('./models/comment'),
+//      User              = require('./models/user'),
+      seedDB            = require('./seeds');
+
 
 mongoose.connect('mongodb://localhost/boxes_app',{useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify:false, useCreateIndex: true});
 
-const boxSchema = new mongoose.Schema({
-  name: String,
-  image: String,
-  address: String
-});
-const Box = mongoose.model('Box', boxSchema);
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(expressSanitizer());
-app.use(methodOverride('_method'));
+app.use(methodOverride('_method'));    
+seedDB();
 
+
+// LANDING PAGE
 app.get('/', (req, res) => {
   res.render('landing');
 })
@@ -54,20 +56,23 @@ app.post('/boxes', (req,res) => {
 
 // SHOW shows more info about a Box
 app.get('/boxes/:id', (req,res) => {
+  // find box with the ID
   let id = req.params.id;
-  Box.findById(id, (err, foundBox) => {
+  Box.findById(req.params.id).populate('comments').exec((err, foundBox) => {
     if(err){
       console.log(err);
     } else {
-      res.render('show', {box: foundBox})
+      console.log(foundBox);
+      //render the show template withthat box
+      res.render('show', {box: foundBox});
     }
   })
 });
 
 // EDIT shows edit form and update a post
 app.get('/boxes/:id/edit', (req,res) => {
-  let id = req.params.id;
-  Box.findById(id, (err, foundBox) => {
+
+  Box.findById(req.params.id, (err, foundBox) => {
     if(err){
       res.redirect('/boxes');
     } else {

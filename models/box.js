@@ -5,6 +5,12 @@ const mongoose  = require('mongoose');
 const boxSchema = new mongoose.Schema({
   name: String,
   image: String,
-  address: String
+  address: String,
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'Comment'
+    }
+  ]
 });
 module.exports = mongoose.model('Box', boxSchema);

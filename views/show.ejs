@@ -3,7 +3,12 @@
   <h1><p><%=box.name%></p></h1>
   <div class="container">
     <p><img src='<%=box.image%>'> </p>
-    <h3> <p>Address: <%=box.address%></p></h3>
+    <h3> <p><%=box.address%></p></h3>
+    <% box.comments.forEach((comment) => { %>
+      <p>
+        <strong><%=comment.author%></strong> - <%=comment.text%>, <%=comment.created.toDateString()%>
+      </p>
+    <%})%>
     <a href="/boxes" class="btn btn-primary">Go Back</a>
     <p>
       <a href="/boxes/<%= box._id %>/edit" class="btn btn-primary">Edit</a>
