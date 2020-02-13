@@ -1,12 +1,14 @@
 const bodyParser        = require('body-parser'),
       express           = require('express'),
+      app               = express(),
       methodOverride    = require('method-override'),
       expressSanitizer  = require('express-sanitizer'),
-      app               = express(),
       mongoose          = require('mongoose'),
+      passport          = require('passport'),
+      LocalStrategy     = require('passport-local'),
       Box               = require('./models/box'),
       Comment           = require('./models/comment'),
-//      User              = require('./models/user'),
+      User              = require('./models/user'),
       seedDB            = require('./seeds');
 
 
