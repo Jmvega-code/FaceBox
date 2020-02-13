@@ -23,6 +23,33 @@ app.use(expressSanitizer());
 app.use(methodOverride('_method'));    
 seedDB();
 
+// PASSPORT COFIGURATION
+app.use(require('express-session')({
+  secret: 'Rusty wins the cutest dog contest',
+  resave:false,
+  saveUninitialized:false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+
+
+
+
+
+
+
+
+
+
+//====================
+// RESTFUL ROUTES
+//====================
+
 
 // LANDING PAGE
 app.get('/', (req, res) => {
@@ -36,7 +63,7 @@ app.get('/boxes', (req,res) => {
     if(err){
       console.log(err)
     } else {
-      res.render('boxes/index', {allBoxes})
+      res.render('boxes/index', {allBoxes:allBoxes})
     }
   })
 });
@@ -108,6 +135,13 @@ app.delete('/boxes/:id', (req, res) => {
 
 
 
+
+
+
+
+
+
+
 //====================
 // COMMENTS ROUTES
 //====================
@@ -146,6 +180,35 @@ app.post('/boxes/:id/comments', (req, res) => {
 });
 
 
+
+
+
+
+
+
+
+//======================
+// AUTH ROUTES
+//======================
+
+
+// Show register form
+app.get('/register', (req,res) => {
+  res.render('register')
+});
+
+// Handles sign up logic 
+app.post('/register', (req,res) => {
+  User.register(new User({username: req.body.username}), req.body.password, (err, user) => {
+      if(err){
+        console.log(err);
+        return res.render('register');
+      }
+      passport.authenticate('local')(req,res, () => {
+        res.redirect('/boxes')
+      });
+  });
+});
 
 
 app.listen(3000, () => {
