@@ -31,7 +31,7 @@
     
       <form action="/boxes/<%=box._id%>/comments" method="POST">
         <div class="form-group">
-          <input class="form-control" type="text" name="comment[author]" placeholder="Author">
+          <input class="form-control" type="text" name="comment[author]" value="<%=currentUser.username%>">
         </div>
         <div class="form-group">
           <textarea class="form-control" name="comment[text]" placeholder="Write a comment"></textarea>
