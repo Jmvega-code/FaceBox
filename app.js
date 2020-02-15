@@ -36,7 +36,10 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
+app.use((req,res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+}),
 
 
 
@@ -146,7 +149,7 @@ app.delete('/boxes/:id', (req, res) => {
 // COMMENTS ROUTES
 //====================
 
-app.get('/boxes/:id/comments/new', (req,res) => {
+app.get('/boxes/:id/comments/new', isLoggedIn , (req,res) => {
   // find box with the ID
   Box.findById(req.params.id).populate('comments').exec((err, foundBox) => {
     if(err){
@@ -159,7 +162,7 @@ app.get('/boxes/:id/comments/new', (req,res) => {
   })
 });
 
-app.post('/boxes/:id/comments', (req, res) => {
+app.post('/boxes/:id/comments', isLoggedIn, (req, res) => {
   //lookup box using id
   Box.findById(req.params.id, (err, box) => {
     if(err){
@@ -210,6 +213,30 @@ app.post('/register', (req,res) => {
   });
 });
 
+// SHow login form
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+
+// Adding login logic
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/boxes',
+  failureRedirect: '/login',
+}), (req,res) => {
+});
+
+// logout
+app.get('/logout', (req,res) => {
+  req.logout();
+  res.redirect('/')
+});
+
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login');
+}
 
 app.listen(3000, () => {
   console.log('Serving the BoxFinder on port 3000!')
