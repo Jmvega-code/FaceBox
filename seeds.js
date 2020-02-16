@@ -24,7 +24,7 @@ let data = [
 function seedDB() {
   // Remove all boxes
   Box.remove({}, (err) => {
-    if(err){
+/*     if(err){
       console.log(err);
     } else {
       console.log('Removed Boxes');
@@ -52,7 +52,7 @@ function seedDB() {
             });
         }
       });
-    });
+    }); */
   });
 
 }

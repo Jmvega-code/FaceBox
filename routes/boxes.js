@@ -20,12 +20,12 @@ router.get('/', (req,res) => {
 });
 
 // NEW - Show form to create new Boxes
-router.get('/new', (req,res) => {
+router.get('/new', isLoggedIn, (req,res) => {
   res.render('boxes/new')
 });
 
 // CREATE add new Box to db
-router.post('/', (req,res) => {
+router.post('/', isLoggedIn, (req,res) => {
   Box.create(req.body.box, (err, newBox) => {
     if(err){
       console.log(err);
@@ -83,5 +83,13 @@ router.delete('/:id', (req, res) => {
     }
   });
 });
+
+// Middleware
+function isLoggedIn(req, res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+  res.redirect('/login');
+}
 
 module.exports = router; 

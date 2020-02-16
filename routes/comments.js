@@ -13,7 +13,6 @@ router.get('/new', isLoggedIn , (req,res) => {
     if(err){
       console.log(err);
     } else {
-      console.log(foundBox);
       //render the show template with that box
       res.render('comments/new', {box: foundBox});
     }
@@ -31,8 +30,15 @@ router.post('/', isLoggedIn, (req, res) => {
         if(err){
           console.log(err);
         } else {
+          // Add username and id to comment
+          comment.author.id = req.user._id;
+          comment.author.username = req.user.username;
+          // Save comment 
+          comment.save();
+          // push the comment in to the comments array
           box.comments.push(comment);
           box.save();
+          console.log(comment);
           res.redirect('/boxes/' + box._id);
         }
       });

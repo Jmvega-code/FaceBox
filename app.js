@@ -25,7 +25,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static(__dirname + '/public'));
 app.use(expressSanitizer());
 app.use(methodOverride('_method'));    
-seedDB();
+
+// seedDB(); // seed the database
 
 // PASSPORT COFIGURATION
 app.use(require('express-session')({
