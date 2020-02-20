@@ -19,6 +19,7 @@ router.get('/new', isLoggedIn , (req,res) => {
   })
 });
 
+// CREATE add new Comment to db
 router.post('/', isLoggedIn, (req, res) => {
   //lookup box using id
   Box.findById(req.params.id, (err, box) => {

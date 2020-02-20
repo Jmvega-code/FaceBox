@@ -26,10 +26,19 @@ router.get('/new', isLoggedIn, (req,res) => {
 
 // CREATE add new Box to db
 router.post('/', isLoggedIn, (req,res) => {
-  Box.create(req.body.box, (err, newBox) => {
+  let name = req.body.name,
+      image = req.body.image,
+      address = req.body.address,
+      author = {
+        username: req.user.username,
+        id: req.user._id
+      };
+  let newBox = {name, image, address, author};
+  Box.create(newBox, (err, newlyCreatedBox) => {
     if(err){
       console.log(err);
     } else {
+      console.log(newBox);
       res.redirect('/boxes');
     }
   });
