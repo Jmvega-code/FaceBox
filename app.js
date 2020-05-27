@@ -51,5 +51,5 @@ app.use('/boxes', boxRoutes);
 app.use('/boxes/:id/comments', commentRoutes);
 
 app.listen(3000, () => {
-  console.log('Serving the BoxFinder on port 3000!')
+  console.log('Serving the FaceBox on port 3000!')
 });

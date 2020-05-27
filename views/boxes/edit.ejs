@@ -1,17 +1,17 @@
 <%- include('../partials/header')%>
 <div class="container">
   <div class="row">
-    <h1 style="text-align: center;">Edit <%=box.name%></h1>
+    <h1 style="text-align: center;">Edit <%= box.name %></h1>
     <div style="width: 30%; margin: 30px auto;">
       <form action="/boxes/<%= box._id %>?_method=PUT" method="POST">
         <div class="form-group">
-          <input class="form-control" type="text" name="box[name]" value="<%=box.name%>">
+          <input class="form-control" type="text" name="box[name]" value="<%= box.name %>">
         </div>
         <div class="form-group">
-          <input class="form-control" type="text" name="box[image]" value="<%=box.image%>">
+          <input class="form-control" type="text" name="box[image]" value="<%= box.image %>">
         </div>
         <div class="form-group">
-          <input class="form-control" type="text" name="box[address]" value="<%=box.address%>">
+          <input class="form-control" type="text" name="box[address]" value="<%= box.address %>">
         </div>
         <div class="form-group">
           <button class="btn-primary btn-lg btn-default btn-block">Edit</button>
