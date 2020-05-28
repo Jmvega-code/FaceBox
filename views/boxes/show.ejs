@@ -11,13 +11,13 @@
     </div>
     <div class="col-md-9">
       <div class="thumbnail">
-        <img class="img-responsive" src='<%=box.image%>'>
+        <img class="img-responsive" src='<%= box.image %>'>
         <div class="caption-full">
           <h4 class="pull-right">$15.00/drop in</h4>
           <h4><a href=""><%=box.name%></a></h4>
-          <p><%=box.address%></p>
+          <p><%= box.address %></p>
           <p>
-            <em>Uploaded by <%=box.author.username%></em>
+            <em>Uploaded by <%= box.author.username %></em>
           </p>
           <% if(currentUser && box.author.id.equals(currentUser._id)) { %>
             <a class="btn btn-xs btn-warning" href="/boxes/<%= box._id %>/edit">Edit</a>
@@ -27,6 +27,10 @@
           <% } %>
         </div>
       </div>
+
+
+
+
       <div class="well">
         <div class="text-right">
           <a class="btn btn-success" href="/boxes/<%= box._id %>/comments/new">Add a comment</a>
@@ -40,10 +44,20 @@
               <p>
                 <%=comment.text%>
               </p>
+              <a class="btn btn-xs btn-warning" 
+              href="/boxes/<%= box._id %>/comments/<%= comment._id %>/edit">
+              Edit
+            </a>
+            <form id="delete-form" action="/boxes/<%=box._id%>?_method=DELETE" method="POST">
+              <button class="btn btn-xs btn-danger"></i>Delete</button> 
+            </form>
             </div>
           </div>
         <%})%>    
       </div>
+
+
+
     </div>
   </div>
   <div class="container">

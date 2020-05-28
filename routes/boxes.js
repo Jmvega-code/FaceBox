@@ -60,14 +60,14 @@ router.get('/:id', (req,res) => {
 });
 
 // EDIT shows edit form and update a post
-router.get('/:id/edit', checkCampgroundOwnership, (req,res) => {
+router.get('/:id/edit', checkBoxOwnership, (req,res) => {
     Box.findById(req.params.id, (err, foundBox) => {
       res.render('boxes/edit', {box: foundBox});
     });
 });
 
 // UPDATE BOX ROUTE
-router.put('/:id', checkCampgroundOwnership, (req, res) => {
+router.put('/:id', checkBoxOwnership, (req, res) => {
   Box.findByIdAndUpdate(req.params.id, req.body.box, (err, updatedBox) => {
     if(err){
       res.redirect('/boxes');
@@ -78,7 +78,7 @@ router.put('/:id', checkCampgroundOwnership, (req, res) => {
 });
 
 // DESTROY BOX ROUTE
-router.delete('/:id', checkCampgroundOwnership, (req, res) => {
+router.delete('/:id', checkBoxOwnership, (req, res) => {
   Box.findByIdAndRemove(req.params.id, (err) => {
     if(err){
       console.log(err);
@@ -97,7 +97,7 @@ function isLoggedIn(req, res, next){
   res.redirect('/login');
 }
 
-function checkCampgroundOwnership(req, res, next){
+function checkBoxOwnership(req, res, next){
   if(req.isAuthenticated()) {
     Box.findById(req.params.id, (err, foundBox) => {
       if(err){
