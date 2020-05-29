@@ -37,17 +37,19 @@
             <p>
               <%=comment.text%>
             </p>
-            <form action="/boxes/<%=box._id%>/comments" method="POST">
-              <div class="form-group">
-                <textarea class="form-control" name="comment[text]" placeholder="Write a comment"></textarea>
-              </div>
-              <div class="form-group">
-                <button class="btn btn-primary btn-default">Submit</button>
-              </div>
-            </form>
+            <hr>
           </div>
         </div>
-        <%})%>    
+        <%})%>
+        <strong><%=currentUser.username%></strong>:   
+        <form action="/boxes/<%=box._id%>/comments" method="POST">
+          <div class="form-group">
+            <textarea class="form-control" name="comment[text]" placeholder="Write a comment"></textarea>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-default">Submit</button>
+          </div>
+        </form>
       </div>
       <a class="btn btn-primary" href="/boxes/<%= box._id %>">Go Back</a>
 </div>

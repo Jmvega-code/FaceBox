@@ -44,13 +44,17 @@
               <p>
                 <%=comment.text%>
               </p>
-              <a class="btn btn-xs btn-warning" 
-                 href="/boxes/<%= box._id %>/comments/<%= comment._id %>/edit">Edit
+          <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>
+                <a class="btn btn-xs btn-warning" 
+                href="/boxes/<%= box._id %>/comments/<%= comment._id %>/edit">Edit
               </a>
-            <form id="delete-form" action="/boxes/<%=box._id%>?_method=DELETE" method="POST">
+              <form class="delete-form" 
+              action="/boxes/<%=box._id%>/comments/<%= comment._id %>?_method=DELETE" method="POST">
               <button class="btn btn-xs btn-danger"></i>Delete</button> 
             </form>
-            </div>
+          <% } %>
+          <hr>
+          </div>
           </div>
         <%})%>    
       </div>
