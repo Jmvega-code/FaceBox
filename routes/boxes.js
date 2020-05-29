@@ -1,6 +1,7 @@
 const express = require('express'),
 router = express.Router(),
-Box = require('../models/box')
+Box = require('../models/box'),
+middleWare = require('../middleware')
 
 
 //==========================
@@ -20,12 +21,12 @@ router.get('/', (req,res) => {
 });
 
 // NEW - Show form to create new Boxes
-router.get('/new', isLoggedIn, (req,res) => {
+router.get('/new', middleWare.isLoggedIn, (req,res) => {
   res.render('boxes/new')
 });
 
 // CREATE add new Box to db
-router.post('/', isLoggedIn, (req,res) => {
+router.post('/', middleWare.isLoggedIn, (req,res) => {
   let name = req.body.name,
       image = req.body.image,
       address = req.body.address,
@@ -60,14 +61,14 @@ router.get('/:id', (req,res) => {
 });
 
 // EDIT shows edit form and update a post
-router.get('/:id/edit', checkBoxOwnership, (req,res) => {
+router.get('/:id/edit', middleWare.checkBoxOwnership, (req,res) => {
     Box.findById(req.params.id, (err, foundBox) => {
       res.render('boxes/edit', {box: foundBox});
     });
 });
 
 // UPDATE BOX ROUTE
-router.put('/:id', checkBoxOwnership, (req, res) => {
+router.put('/:id', middleWare.checkBoxOwnership, (req, res) => {
   Box.findByIdAndUpdate(req.params.id, req.body.box, (err, updatedBox) => {
     if(err){
       res.redirect('/boxes');
@@ -78,7 +79,7 @@ router.put('/:id', checkBoxOwnership, (req, res) => {
 });
 
 // DESTROY BOX ROUTE
-router.delete('/:id', checkBoxOwnership, (req, res) => {
+router.delete('/:id', middleWare.checkBoxOwnership, (req, res) => {
   Box.findByIdAndRemove(req.params.id, (err) => {
     if(err){
       console.log(err);
@@ -89,30 +90,5 @@ router.delete('/:id', checkBoxOwnership, (req, res) => {
   });
 });
 
-// Middleware
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/login');
-}
-
-function checkBoxOwnership(req, res, next){
-  if(req.isAuthenticated()) {
-    Box.findById(req.params.id, (err, foundBox) => {
-      if(err){
-        res.redirect('back');
-      } else {
-        if (foundBox.author.id.equals(req.user._id)) {
-          next();
-        } else {
-          res.redirect('back');
-        }
-      }
-    });
-  } else {
-    res.redirect('back');
-  }
-}
 
 module.exports = router; 
