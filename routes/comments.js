@@ -47,10 +47,27 @@ router.post('/', isLoggedIn, (req, res) => {
   });
 });
 
+// COMMENTS EDIT ROUTE
 router.get('/:comment_id/edit', (req, res) => {
-  res.send()
+  Comment.findById(req.params.comment_id, (err, foundComment) => {
+    if(err){
+      res.redirect('back');
+    } else {
+      res.render('comments/edit', {box_id: req.params.id, comment: foundComment});
+    }
+  });
 })
 
+// COMMENTS UPDATE ROUTE
+router.put('/:comment_id', (req, res) => {
+  Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedComment) => {
+    if(err){
+      res.redirect('back');
+    } else {
+      res.redirect('/boxes/' + req.params.id );
+    }
+  })
+});
 
 function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
