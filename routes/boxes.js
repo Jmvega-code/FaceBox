@@ -15,7 +15,7 @@ router.get('/', (req,res) => {
     if(err){
       console.log(err)
     } else {
-      res.render('boxes/index', {allBoxes:allBoxes})
+      res.render('boxes/index', {allBoxes: allBoxes})
     }
   })
 });

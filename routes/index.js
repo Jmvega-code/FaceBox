@@ -23,10 +23,10 @@ router.get('/register', (req,res) => {
 router.post('/register', (req,res) => {
   User.register(new User({username: req.body.username}), req.body.password, (err, user) => {
       if(err){
-        console.log(err);
-        return res.render('register');
+        return res.render("register", {"error": err.message});
       }
       passport.authenticate('local')(req,res, () => {
+        req.flash('success', 'Welcome to FaceBox,' + user.username);
         res.redirect('/boxes');
       });
   });
@@ -34,6 +34,7 @@ router.post('/register', (req,res) => {
 
 // Show login form
 router.get('/login', (req, res) => {
+
   res.render('login');
 });
 
@@ -47,15 +48,9 @@ router.post('/login', passport.authenticate('local', {
 // logout route
 router.get('/logout', (req,res) => {
   req.logout();
-  res.redirect('/')
+  req.flash('success', 'Logged you out!');
+  res.redirect('/boxes');
 });
 
-// Middleware
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/login');
-}
 
 module.exports = router; 

@@ -30,6 +30,7 @@ router.post('/', middleWare.isLoggedIn, (req, res) => {
     } else {
       Comment.create(req.body.comment, (err, comment) => {
         if(err){
+          req.flash('error', 'Something went wrong');
           console.log(err);
         } else {
           // Add username and id to comment
@@ -41,6 +42,7 @@ router.post('/', middleWare.isLoggedIn, (req, res) => {
           box.comments.push(comment);
           box.save();
           console.log(comment);
+          req.flash('success', 'Comment successfully added!');
           res.redirect('/boxes/' + box._id);
         }
       });
@@ -77,6 +79,7 @@ router.delete('/:comment_id', middleWare.checkCommentOwnership, (req, res) => {
       console.log(err);
       res.redirect('back');
     } else {
+      req.flash('success', 'Comment deleted!');
       res.redirect('/boxes/' + req.params.id);
     }
   });
